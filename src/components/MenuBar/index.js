@@ -1,31 +1,43 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPencil,
-  faRotateRight,
-  faRotateLeft,
-  faEraser,
-  faFileArrowDown,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-
+import { useDispatch, useSelector } from "react-redux";
+import { showToolBox } from "@/slices/toolBoxSlice";
+import { menuIcons } from "./menuIcons";
+import { handleMenuItemClick } from "@/slices/menuSlice";
 const MenuBar = () => {
-  const menuIcons = [
-    faPencil,
-    faRotateLeft,
-    faRotateRight,
-    faEraser,
-    faFileArrowDown,
-    faXmark,
+  const { activeMenuItem } = useSelector((state) => state.menu);
+  const dispatch = useDispatch();
+  const iconClickHandlers = [
+    () => handlePencilClick(),
+    () => handleEraserClick(),
+    () => handleUndoClick(),
+    () => handleRedoClick(),
+    () => handleDownloadClick(),
+    () => handleClearAllClick(),
   ];
+
+  const handlePencilClick = () => {
+    dispatch(showToolBox());
+    dispatch(handleMenuItemClick("PENCIL"));
+  };
+  const handleEraserClick = () => {
+    dispatch(handleMenuItemClick("ERASER"));
+    dispatch(showToolBox());
+  };
+
   return (
-    <div className="flex justify-center my-4">
+    <div className="absolute top-4 right-1/2 translate-x-1/2">
       <div className="border border-gray-100 bg-gray-50 flex px-5 rounded-full">
         {menuIcons.map((icon, index) => (
           <div
-            className="px-4 py-2 hover:bg-slate-200 cursor-pointer"
+            className={`${
+              icon.name === activeMenuItem
+                ? "bg-slate-100 border border-b-black"
+                : null
+            } px-4 py-2 hover:bg-slate-200 cursor-pointer`}
             key={index}
+            onClick={iconClickHandlers[index]}
           >
-            <FontAwesomeIcon icon={icon} />
+            <FontAwesomeIcon icon={icon.icon} />
           </div>
         ))}
       </div>
