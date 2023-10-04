@@ -19,7 +19,7 @@ const ToolBox = () => {
 
   if (!isToolBoxOpen) return;
   return (
-    <div className="border border-gray-200 w-60 absolute top-1/4 left-2 ml-5 py-2 px-3 rounded-lg shadow-md">
+    <div className="border border-gray-200 w-60 absolute top-1/4 left-2 ml-5 py-2 px-3 rounded-lg shadow-md bg-white">
       {activeMenuItem !== "ERASER" && (
         <>
           <div className="my-1">
