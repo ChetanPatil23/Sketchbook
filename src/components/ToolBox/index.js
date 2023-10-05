@@ -36,9 +36,12 @@ const ToolBox = () => {
               {defaultColors.map((color, index) => (
                 <span
                   key={index}
+                  style={{ backgroundColor: color }}
                   className={`${
-                    PENCIL.color === color && "border border-black rounded-sm"
-                  } w-8 h-5 bg-${color}-600 cursor-pointer`}
+                    PENCIL.color === color
+                      ? "border border-black rounded-sm"
+                      : ""
+                  } w-8 h-5 cursor-pointer`}
                   onClick={() => dispatch(changePencilColor(color))}
                 ></span>
               ))}
