@@ -2,7 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { showToolBox } from "@/slices/toolBoxSlice";
 import { menuIcons } from "./menuIcons";
-import { handleMenuItemClick } from "@/slices/menuSlice";
+import {
+  handleActionMenuItemClick,
+  handleMenuItemClick,
+} from "@/slices/menuSlice";
 const MenuBar = () => {
   const { activeMenuItem } = useSelector((state) => state.menu);
   const dispatch = useDispatch();
@@ -22,6 +25,18 @@ const MenuBar = () => {
   const handleEraserClick = () => {
     dispatch(handleMenuItemClick("ERASER"));
     dispatch(showToolBox());
+  };
+  const handleUndoClick = () => {
+    dispatch(handleActionMenuItemClick("UNDO"));
+  };
+  const handleRedoClick = () => {
+    dispatch(handleActionMenuItemClick("REDO"));
+  };
+  const handleDownloadClick = () => {
+    dispatch(handleActionMenuItemClick("DOWNLOAD"));
+  };
+  const handleClearAllClick = () => {
+    dispatch(handleActionMenuItemClick("CLEAR_ALL"));
   };
 
   return (
