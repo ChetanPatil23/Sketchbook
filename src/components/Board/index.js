@@ -1,27 +1,24 @@
 import { handleActionMenuItemClick } from "@/slices/menuSlice";
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MENU_ICONS } from "@/constants";
 
 const Board = () => {
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
+  const drawHistory = useRef([]);
+  const currentIndex = useRef(0);
   const { activeMenuItem, actionMenuItem } = useSelector((state) => state.menu);
   const { color, size } = useSelector((state) => state.toolBox[activeMenuItem]);
   const dispatch = useDispatch();
-  console.log({ actionMenuItem });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    if (actionMenuItem === "DOWNLOAD") {
-      const imageData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      ).data;
-      const hasContent = Array.from(imageData).some((value) => value !== 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const hasContent = Array.from(imageData).some((value) => value !== 0);
+    if (actionMenuItem === MENU_ICONS.DOWNLOAD) {
       if (hasContent) {
         // Creating a new canvas with a white background
         const newCanvas = document.createElement("canvas");
@@ -41,9 +38,21 @@ const Board = () => {
       } else {
         alert("You have not drawn anything yet!");
       }
-    }
-    if (actionMenuItem === "CLEAR_ALL") {
+    } else if (actionMenuItem === MENU_ICONS.CLEAR_ALL) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+    } else if (
+      hasContent &&
+      (actionMenuItem === MENU_ICONS.UNDO || actionMenuItem === MENU_ICONS.REDO)
+    ) {
+      if (actionMenuItem === MENU_ICONS.UNDO && currentIndex.current > 0)
+        currentIndex.current -= 1;
+      if (
+        actionMenuItem === MENU_ICONS.REDO &&
+        currentIndex.current < drawHistory.current.length - 1
+      )
+        currentIndex.current += 1;
+      const imageData = drawHistory.current[currentIndex.current];
+      ctx.putImageData(imageData, 0, 0);
     }
     dispatch(handleActionMenuItemClick(null));
   }, [actionMenuItem]);
@@ -84,6 +93,9 @@ const Board = () => {
     };
     const mouseUpHandler = () => {
       shouldDraw.current = false;
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      drawHistory.current.push(imageData);
+      currentIndex.current = drawHistory.current.length - 1;
     };
     canvas.addEventListener("mousedown", mouseDownHandler);
     canvas.addEventListener("mousemove", mouseMoveHandler);
@@ -94,17 +106,7 @@ const Board = () => {
       canvas.removeEventListener("mouseup", mouseUpHandler);
     };
   }, []);
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        cursor:
-          activeMenuItem === "ERASER"
-            ? "url(https://w7.pngwing.com/pngs/538/9/png-transparent-computer-icons-eraser-eraser-angle-logo-web-button.png), auto"
-            : "url(https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-pencil-icon-symbol-isolated-png-image_1727846.jpg), auto",
-      }}
-    ></canvas>
-  );
+  return <canvas ref={canvasRef}></canvas>;
 };
 
 export default Board;

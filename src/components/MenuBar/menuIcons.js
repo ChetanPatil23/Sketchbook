@@ -6,12 +6,13 @@ import {
   faFileArrowDown,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { MENU_ICONS } from "@/constants";
 
 export const menuIcons = [
-  { name: "PENCIL", icon: faPencil },
-  { name: "ERASER", icon: faEraser },
-  { name: "UNDO", icon: faRotateLeft },
-  { name: "REDO", icon: faRotateRight },
-  { name: "DOWNLOAD", icon: faFileArrowDown },
-  { name: "CLEAR", icon: faXmark },
+  { name: MENU_ICONS.PENCIL, icon: faPencil },
+  { name: MENU_ICONS.ERASER, icon: faEraser },
+  { name: MENU_ICONS.UNDO, icon: faRotateLeft },
+  { name: MENU_ICONS.REDO, icon: faRotateRight },
+  { name: MENU_ICONS.DOWNLOAD, icon: faFileArrowDown },
+  { name: MENU_ICONS.CLEAR, icon: faXmark },
 ];

@@ -1,0 +1,8 @@
+export const MENU_ICONS = {
+  PENCIL: "PENCIL",
+  ERASER: "ERASER",
+  UNDO: "UNDO",
+  REDO: "REDO",
+  DOWNLOAD: "DOWNLOAD",
+  CLEAR_ALL: "CLEAR_ALL",
+};

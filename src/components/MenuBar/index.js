@@ -6,6 +6,7 @@ import {
   handleActionMenuItemClick,
   handleMenuItemClick,
 } from "@/slices/menuSlice";
+import { MENU_ICONS } from "@/constants";
 const MenuBar = () => {
   const { activeMenuItem } = useSelector((state) => state.menu);
   const dispatch = useDispatch();
@@ -20,23 +21,23 @@ const MenuBar = () => {
 
   const handlePencilClick = () => {
     dispatch(showToolBox());
-    dispatch(handleMenuItemClick("PENCIL"));
+    dispatch(handleMenuItemClick(MENU_ICONS.PENCIL));
   };
   const handleEraserClick = () => {
-    dispatch(handleMenuItemClick("ERASER"));
+    dispatch(handleMenuItemClick(MENU_ICONS.ERASER));
     dispatch(showToolBox());
   };
   const handleUndoClick = () => {
-    dispatch(handleActionMenuItemClick("UNDO"));
+    dispatch(handleActionMenuItemClick(MENU_ICONS.UNDO));
   };
   const handleRedoClick = () => {
-    dispatch(handleActionMenuItemClick("REDO"));
+    dispatch(handleActionMenuItemClick(MENU_ICONS.REDO));
   };
   const handleDownloadClick = () => {
-    dispatch(handleActionMenuItemClick("DOWNLOAD"));
+    dispatch(handleActionMenuItemClick(MENU_ICONS.DOWNLOAD));
   };
   const handleClearAllClick = () => {
-    dispatch(handleActionMenuItemClick("CLEAR_ALL"));
+    dispatch(handleActionMenuItemClick(MENU_ICONS.CLEAR_ALL));
   };
 
   return (
