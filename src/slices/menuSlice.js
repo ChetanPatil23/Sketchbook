@@ -10,11 +10,12 @@ const menuSlice = createSlice({
     handleMenuItemClick: (state, action) => {
       state.activeMenuItem = action.payload;
     },
-    handleActionMenuItemClick: (state,action) => {
+    handleActionMenuItemClick: (state, action) => {
       state.actionMenuItem = action.payload;
     },
   },
 });
 
-export const { handleMenuItemClick, handleActionMenuItemClick } = menuSlice.actions;
+export const { handleMenuItemClick, handleActionMenuItemClick } =
+  menuSlice.actions;
 export default menuSlice.reducer;

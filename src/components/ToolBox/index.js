@@ -5,6 +5,7 @@ import {
   changePencilColor,
   changeBrushSize,
 } from "@/slices/toolBoxSlice";
+import { MENU_ICONS } from "@/constants";
 const ToolBox = () => {
   const defaultColors = ["red", "blue", "green"];
   const [brushSizeMaxLength, setBrushSizeMaxLength] = useState(10);
@@ -13,8 +14,8 @@ const ToolBox = () => {
     (state) => state.toolBox
   );
   const { activeMenuItem } = useSelector((state) => state.menu);
-  const activeBrushSize =
-    activeMenuItem == "PENCIL" ? PENCIL.size : ERASER.size;
+  const isPencilSelected = activeMenuItem == MENU_ICONS.PENCIL;
+  const activeBrushSize = isPencilSelected ? PENCIL.size : ERASER.size;
 
   const updateBrushSize = (e) => {
     dispatch(changeBrushSize({ item: activeMenuItem, size: e.target.value }));
@@ -23,7 +24,7 @@ const ToolBox = () => {
   if (!isToolBoxOpen) return;
   return (
     <div className="border border-gray-200 w-60 absolute top-1/4 left-2 ml-5 py-2 px-3 rounded-lg shadow-md bg-white">
-      {activeMenuItem !== "ERASER" && (
+      {isPencilSelected && (
         <>
           <div className="my-1">
             <div className="flex items-center justify-between pr-3">
@@ -62,7 +63,7 @@ const ToolBox = () => {
         </>
       )}
       <div className="my-1">
-        {activeMenuItem === "PENCIL" && (
+        {isPencilSelected && (
           <>
             <h3 className="font-medium text-sm">Brush size cap</h3>
             <select
@@ -84,7 +85,7 @@ const ToolBox = () => {
         <input
           type="range"
           min={1}
-          max={activeMenuItem === "PENCIL" ? brushSizeMaxLength : 20}
+          max={isPencilSelected ? brushSizeMaxLength : 20}
           step={1}
           onChange={updateBrushSize}
           value={activeBrushSize}
