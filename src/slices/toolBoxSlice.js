@@ -3,8 +3,8 @@ const toolBoxSlice = createSlice({
   name: "toolBox",
   initialState: {
     isToolBoxOpen: true,
-    PENCIL: { size: 3, color: "black" },
-    ERASER: { size: 3, color: "white" },
+    PENCIL: { size: 3, color: "black", cap: 10 },
+    ERASER: { size: 3, color: "white", cap: 10 },
   },
   reducers: {
     hideToolBox: (state) => {
@@ -19,9 +19,12 @@ const toolBoxSlice = createSlice({
     changeBrushSize: (state, action) => {
       state[action.payload.item].size = action.payload.size;
     },
+    changeCapSize: (state, action) => {
+      state[action.payload.item].cap = action.payload.cap;
+    },
   },
 });
 
-export const { hideToolBox, showToolBox, changePencilColor, changeBrushSize } =
+export const { hideToolBox, showToolBox, changePencilColor, changeBrushSize, changeCapSize } =
   toolBoxSlice.actions;
 export default toolBoxSlice.reducer;

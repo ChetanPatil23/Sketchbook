@@ -94,7 +94,17 @@ const Board = () => {
       canvas.removeEventListener("mouseup", mouseUpHandler);
     };
   }, []);
-  return <canvas ref={canvasRef}></canvas>;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        cursor:
+          activeMenuItem === "ERASER"
+            ? "url(https://w7.pngwing.com/pngs/538/9/png-transparent-computer-icons-eraser-eraser-angle-logo-web-button.png), auto"
+            : "url(https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-pencil-icon-symbol-isolated-png-image_1727846.jpg), auto",
+      }}
+    ></canvas>
+  );
 };
 
 export default Board;
