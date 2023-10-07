@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   hideToolBox,
@@ -7,11 +7,14 @@ import {
 } from "@/slices/toolBoxSlice";
 const ToolBox = () => {
   const defaultColors = ["red", "blue", "green"];
+  const [brushSizeMaxLength, setBrushSizeMaxLength] = useState(10);
   const dispatch = useDispatch();
   const { isToolBoxOpen, PENCIL, ERASER } = useSelector(
     (state) => state.toolBox
   );
   const { activeMenuItem } = useSelector((state) => state.menu);
+  const activeBrushSize =
+    activeMenuItem == "PENCIL" ? PENCIL.size : ERASER.size;
 
   const updateBrushSize = (e) => {
     dispatch(changeBrushSize({ item: activeMenuItem, size: e.target.value }));
@@ -56,14 +59,32 @@ const ToolBox = () => {
         </>
       )}
       <div className="my-1">
-        <h3 className="font-medium text-sm">Brush size</h3>
+        {activeMenuItem === "PENCIL" && (
+          <>
+            <h3 className="font-medium text-sm">Brush size cap</h3>
+            <select
+              onChange={(e) => {
+                if (Number(e.target.value) < Number(activeBrushSize)) {
+                  updateBrushSize(e);
+                }
+                setBrushSizeMaxLength(e.target.value);
+              }}
+              className="border border-gray-300 px-1 my-1"
+            >
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+              <option value={20}>20</option>
+            </select>
+          </>
+        )}
+        <h3 className="font-medium text-sm">Brush size ({activeBrushSize})</h3>
         <input
           type="range"
           min={1}
-          max={10}
+          max={activeMenuItem === "PENCIL" ? brushSizeMaxLength : 20}
           step={1}
           onChange={updateBrushSize}
-          value={activeMenuItem == "PENCIL" ? PENCIL.size : ERASER.size}
+          value={activeBrushSize}
         />
       </div>
     </div>
