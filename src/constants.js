@@ -5,4 +5,5 @@ export const MENU_ICONS = {
   REDO: "REDO",
   DOWNLOAD: "DOWNLOAD",
   CLEAR_ALL: "CLEAR_ALL",
+  USER: "USER",
 };

@@ -2,6 +2,8 @@ import { handleActionMenuItemClick } from "@/slices/menuSlice";
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_ICONS } from "@/constants";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Board = () => {
   const canvasRef = useRef(null);
@@ -36,7 +38,7 @@ const Board = () => {
         anchor.download = "sketch.jpg";
         anchor.click();
       } else {
-        alert("You have not drawn anything yet!");
+        toast.warn("You have not drawn anything yet!");
       }
     } else if (actionMenuItem === MENU_ICONS.CLEAR_ALL) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -106,7 +108,12 @@ const Board = () => {
       canvas.removeEventListener("mouseup", mouseUpHandler);
     };
   }, []);
-  return <canvas ref={canvasRef}></canvas>;
+  return (
+    <>
+      <ToastContainer />
+      <canvas ref={canvasRef}></canvas>;
+    </>
+  );
 };
 
 export default Board;
