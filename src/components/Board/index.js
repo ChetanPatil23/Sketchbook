@@ -111,7 +111,7 @@ const Board = () => {
   return (
     <>
       <ToastContainer />
-      <canvas ref={canvasRef}></canvas>;
+      <canvas ref={canvasRef}></canvas>
     </>
   );
 };
